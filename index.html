@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link
+            href="https://camo.githubusercontent.com/fb7ad326675ead77b9eddba3eab40a3b7e2dcbb2/68747470733a2f2f7777772e66726565706e67696d672e636f6d2f646f776e6c6f61642f6d696e6563726166742f38303733382d776f726c642d7061636d616e2d616e676c652d6d696e6563726166742d73796d6d657472792d646f776e6c6f61642d68712d706e672e706e67"
+            rel="shortcut icon" type="image/png"/>
+
+    <title>PACMAN</title>
+
+
+</head>
+
+<body>
+<header>
+    <!-- Fixed navbar -->
+    <menu>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand"><img alt="" id="logo_svg" src="assets/images/waza.gif"/><span id="logo_name">
+                        PAC-MAN</span></a>
+            <button aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler" data-target="#navbarCollapse" data-toggle="collapse" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" id="home_mode">Welcome <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item" id="game_user">
+                        <a class="nav-link" id="nav_game">Game</a>
+                    </li>
+                    <li class="nav-item" id="login_user">
+                        <a class="nav-link" id="nav_login">Login</a>
+                    </li>
+                    <li class="nav-item" id="register_user">
+                        <a class="nav-link" id="nav_register">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-target=".bd-example-modal-lg" data-toggle="modal">About</a>
+                    </li>
+                    <li class="nav-item" id="logout_user">
+                        <a class="nav-link" id="nav_logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </menu>
+</header>
+
+<!-- Begin page content -->
+<main class="container" role="main">
+
+    <content>
+
+        <div class="jumbotron jumbotron-fluid" id="welcome">
+            <div class="container">
+                <h1 class="display-4">Welcome</h1>
+                <p class="lead" id="welcome_text">
+                    Please login if you already have an account. If you don't, what are you waiting for?
+                    Go
+                    register!
+                    <br/>
+                </p>
+                <img id="welcome_gif" src="assets/images/pacman_gif.gif"/><br/>
+                <button class="btn btn-dark btn-lg btn-block" id="btn_play" type="button">Play</button>
+                <button class="btn btn-dark btn-lg btn-block" id="btn_login" type="button">Login</button>
+                <button class="btn btn-dark btn-lg btn-block" id="btn_register" type="button">Register</button>
+            </div>
+        </div>
+
+        <div class="jumbotron jumbotron-fluid" id="login">
+            <div class="container">
+                <h1 class="display-4">Please sign in</h1>
+                <p class="lead">Enter your username and password credentials to begin playing.</p>
+                <form class="form-signin">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                                <span class="input-group-text" id="login_username_image"><img
+                                        src="assets/images/pacman_black.png"/></span>
+                        </div>
+                        <input autofocus class="form-control" id="login_username" placeholder="Username" required
+                               type="text">
+                    </div>
+
+                    <label class="sr-only" for="login_password">Password</label>
+                    <input class="form-control" id="login_password" placeholder="Password" required type="password">
+
+                    <div class="alert alert-warning" id="alert_login" role="alert">
+                        <strong>Warning<br/></strong> <span id="alert_details_login">You should check in on some of
+                                those
+                                fields below.</span>
+                    </div>
+                    <button class="btn btn-dark btn-lg btn-block" id="sign_in" type="button">Sign in</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="jumbotron jumbotron-fluid" id="register">
+            <div class="container">
+                <h1 class="display-4">Register</h1>
+                <p class="lead">Please enter the necessary details for registration. All fields are mandatory. </p>
+                <form class="needs-validation" novalidate>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="firstName">First name</label>
+                            <input class="form-control" id="firstName" placeholder="" required type="text" value="">
+                            <div class="invalid-feedback">
+                                Valid first name is required.
+                            </div>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="lastName">Last name</label>
+                            <input class="form-control" id="lastName" placeholder="" required type="text" value="">
+                            <div class="invalid-feedback">
+                                Valid last name is required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="username">Username</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><img src="assets/images/pacman_black.png"/></span>
+                            </div>
+                            <input class="form-control" id="username" placeholder="Username" required type="text">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="pass">Password</label>
+                        <input class="form-control" id="pass" placeholder="Password" required type="password">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email">Email</label>
+                        <input class="form-control" id="email" placeholder="you@post.bgu.ac.il" required
+                               type="email">
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Birthday</label>
+                        <input class="form-control" id="datepicker" placeholder="Click here to pick a date"
+                               type="date">
+                    </div>
+
+                    <hr class="mb-4">
+                    <div class="alert alert-warning" id="alert_register" role="alert">
+                        <strong>Warning!</strong> <span id="alert_details">You should check in on some of those
+                                fields
+                                below.</span>
+                    </div>
+
+                    <button class="btn btn-dark btn-lg btn-block" id="continue_register"
+                            type="button">Continue
+                    </button>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="jumbotron jumbotron-fluid" id="game">
+
+            <div class="container" id="container_pre_game">
+                <form class="needs-validation">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="ball_numm">Number of balls [50-90 balls]</label>
+                            <input class="form-control" id="ball_numm" max="90" min="50" name="name_balls"
+                                   pattern="\d+" placeholder="" required type="number" value="50">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="game_time">Game time [60-800 sec]</label>
+                            <input class="form-control" id="game_time" max="800" min="60" name="name_time"
+                                   pattern="\d+" placeholder="" required type="number" value="60">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="ghost_num">Number of ghost [1-4 ghosts]</label>
+                            <input class="form-control" id="ghost_num" max="4" min="1" name="name_ghosts"
+                                   pattern="\d+" placeholder="" required type="number" value="3">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="level_check">Level [1-10]</label>
+                            <input class="form-control" id="level_check" max="10" min="1" name="name_level"
+                                   pattern="\d+" placeholder="" required type="number" value="6">
+                        </div>
+                        <!-- KEYS -->
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="keys">Key Left</label>
+                                <input class="form-control" id="key_left" placeholder="press" required
+                                       type="text"/>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="keys">Key Up</label>
+                                <input class="form-control" id="key_up" placeholder="press" required type="text"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="keys">Key Right</label>
+                                <input class="form-control" id="key_right" placeholder="press" required
+                                       type="text"/>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="keys">Key Bottom</label>
+                                <input class="form-control" id="key_bottom" placeholder="press" required
+                                       type="text"/>
+                            </div>
+                        </div>
+                        <!-- END KEYS -->
+                        <!-- COLORS -->
+                        <div class="row">
+                            <div class="col-md-2 mb-3">
+                                <label for="keys">5 point</label>
+                                <input class="form-control" class="color" id="5points" required type="color"/>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <label for="keys">15 point</label>
+                                <input class="form-control" class="color" id="15points" required type="color"/>
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <label for="keys">25 point</label>
+                                <input class="form-control" class="color" id="25points" required type="color"/>
+                            </div>
+                        </div>
+                        <!-- END COLORS -->
+                    </div>
+                    <button class="btn btn-dark btn-lg btn-block" id="finish_pref" type="button">Start!</button>
+                    <br><br>
+                    <button class="btn btn-dark btn-lg btn-block" id="random" type="button"> Set
+                        random settings
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="container" id="container_game">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="input-group sm-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">SCORE</span>
+                        </div>
+                        <input aria-describedby="inputGroup-sizing-default" aria-label="Default"
+                               class="form-control" id="lblScore" type="text">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group sm-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">TIME LEFT</span>
+                        </div>
+                        <input aria-describedby="inputGroup-sizing-default" aria-label="Default"
+                               class="form-control" id="lblTime" type="text">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10 col-sm-12">
+                    <canvas class="pacman_game" id="canvas"></canvas>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="input-group sm-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">HEARTS</span>
+                        </div>
+                        <input aria-describedby="inputGroup-sizing-default" aria-label="Default"
+                               class="form-control" id="lblHeart" type="text">
+                    </div>
+                </div>
+                <button class="btn btn-dark btn-lg btn-block offset-3 col-sm-2" id="re_game" type="button">
+                    Restart
+                </button>
+            </div>
+        </div>
+        </div>
+        </div> <!-- container game -->
+        </div> <!-- main game tag -->
+    </content>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <span class="text-muted" data-target=".ad-modal" data-toggle="modal">Serfati</span>
+        <span class="text-muted" data-target=".contact-modal" data-toggle="modal">Yarden </span>
+        <span id="copyright">&copy; 2020</span>
+    </div>
+</footer>
+
+<!-- Bootstrap core CSS additions -->
+<link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+<script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
+<!--==================================================
+ Placed at the end of the document so the pages load faster -->
+<!-- Custom styles for this template -->
+<link href="assets/css/style.css" rel="stylesheet">
+<script src="assets/js/util.js"></script>
+<script src="assets/js/ghost.js"></script>
+<script src="assets/js/pacman.js"></script>
+</body>
+
+</html>
