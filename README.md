@@ -8,9 +8,9 @@
 **PACMAN** is a historical tribute and remake of the original Pac-Man arcade game.
 Written in HTML5 + CSS3 + jQuery with Canvas. This WebApp is a Responsive Web Design (RWD) website.
 
-[Click Here to Play!](https://spacman.herokuapp.com/)
+[Click Here to Play!](https://sypacman.herokuapp.com/)
 
-Also you can find the game here (username: **p**, password: **p**):  https://spacman.herokuapp.com/
+Also you can find the game here (username: **p**, password: **p**):  https://sypacman.herokuapp.com/
 
 Enjoy :)
 
