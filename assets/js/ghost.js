@@ -1,3 +1,8 @@
+var red_ghost_shape = {},
+    blue_ghost_shape = null,
+    pink_ghost_shape = null;
+yellow_ghost_shape = null;
+
 function insertGhost(x_center, y_center, color) {
     var c = document.getElementById("canvas");
     var ctx = c.getContext("2d");
@@ -10,6 +15,67 @@ function insertGhost(x_center, y_center, color) {
         0.9 * (canvasWidth / board_size),
         0.9 * (canvasHeight / board_size)
     );
+}
+
+function findOptimalPathToPacMan(x, y) {
+    var options = findOptionalMoves(x, y);
+
+    var choice = options[0];
+    var minManhattanDist = manhattanDistance(
+        pac_man_shape.i,
+        pac_man_shape.j,
+        choice.x,
+        choice.y
+    );
+
+    for (var k = 1; k < options.length; k++) {
+        if (
+            manhattanDistance(
+                pac_man_shape.i,
+                pac_man_shape.j,
+                options[k].x,
+                options[k].y
+            ) < minManhattanDist
+        ) {
+            choice = options[k];
+            minManhattanDist = manhattanDistance(
+                pac_man_shape.i,
+                pac_man_shape.j,
+                options[k].x,
+                options[k].y
+            );
+        }
+    }
+
+    return choice;
+}
+
+function manhattanDistance(x1, y1, x2, y2) {
+    return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+}
+
+function findLongPathToPacMan(x, y) {
+    var options = findOptionalMoves(x, y);
+    var max = 0;
+    var max_index = 0;
+    var temp_max = 0;
+    for (var k = 0; k < options.length; k++) {
+        temp_max = Math.sqrt(
+            Math.pow(pac_man_shape.i - options[k].x, 2) +
+            Math.pow(pac_man_shape.j - options[k].y, 2)
+        );
+        if (temp_max > max) {
+            max = temp_max;
+            max_index = k;
+        }
+    }
+    return options[max_index];
+}
+
+function randomMove(x, y) {
+    var options = findOptionalMoves(x, y);
+    var choice = Math.floor(Math.random() * options.length);
+    return options[choice];
 }
 
 function updateGhosts() {
@@ -86,7 +152,6 @@ function updateGhosts() {
         yellow_ghost_shape.j = pair_yellow.y;
     }
 }
-
 function putGhosts() {
     dark_side_board[0][0] = actors.red;
     red_ghost_shape.i = 0;
@@ -111,8 +176,6 @@ function putGhosts() {
         yellow_ghost_shape.j = 0;
     }
 }
-
-//Checks if pacman collided with the ghosts
 function checkCollisions() {
     if (
         red_ghost_shape.i === pac_man_shape.i &&
@@ -149,14 +212,6 @@ function checkCollisions() {
         return true;
     }
 }
-
-function drawGhost(x_center, y_center, color) {
-    context.beginPath();
-    context.rect(x_center, y_center, 60, 60);
-    context.fillStyle = color; //color
-    context.fill();
-}
-
 function clearGhosts() {
     dark_side_board[red_ghost_shape.i][red_ghost_shape.j] = actors.nothing;
     dark_side_board[moving_food_shape.i][moving_food_shape.j] = actors.nothing;

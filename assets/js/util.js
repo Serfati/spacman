@@ -60,95 +60,6 @@ var users = [];
 var user_login = false;
 var active_user = null;
 var message = "";
-
-$("#alert_register").hide();
-$("#alert_login").hide();
-
-function afterRegister() {
-    $("#register").hide();
-    $("#login").show();
-}
-
-function afterLogin() {
-    $("#welcome").show();
-    $("#game").hide();
-    $("#login").hide();
-    $("#game_user").show();
-    $("#register").hide();
-    $("#register_user").hide();
-    $("#login_user").hide();
-    $("#logout_user").show();
-    $("#btn_login").hide();
-    $("#btn_register").hide();
-    $("#player_name").empty();
-    var user_fullname = active_user.firstName + " " + active_user.lastName;
-    $("#player_name").html(user_fullname);
-    $("#welcome_text").text("You may play now!");
-    $("#btn_play").show();
-}
-
-function afterLogout() {
-    $("#welcome").show();
-    $("#game").hide();
-    $("#login").hide();
-    $("#register").hide();
-    $("#game_user").hide();
-    $("#alredy_login").hide();
-    $("#register_user").show();
-    $("#login_user").show();
-    $("#logout_user").hide();
-    $("#btn_login").show();
-    $("#btn_register").show();
-    $("#btn_play").hide();
-    $("#welcome_text").text(
-        "Please login if you already have an account. If you don't, what are you waiting for? Go register!"
-    );
-}
-
-function map1(board, dark_side_board) {
-    var pacmanMaze = [
-        [0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0],
-        [0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
-        [2, 0, 2, 2, 0, 2, 0, 2, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 2],
-        [2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 2, 2, 2, 2],
-        [2, 2, 0, 2, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-        [2, 0, 0, 2, 0, 2, 2, 2, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2, 2],
-        [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-        [2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 2],
-        [2, 0, 0, 2, 0, 0, 0, 2, 0, 0, 2, 2, 0, 0, 2, 0, 0, 0, 2],
-        [2, 0, 2, 2, 0, 2, 2, 0, 0, 0, 2, 2, 0, 0, 2, 0, 0, 0, 2],
-        [2, 2, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2, 2, 2],
-        [2, 0, 2, 0, 0, 0, 0, 2, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 2],
-        [2, 0, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2],
-        [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
-        [2, 0, 0, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2],
-        [2, 0, 2, 2, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2],
-        [2, 0, 0, 2, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2],
-        [2, 2, 0, 2, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2],
-        [0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0],
-    ];
-
-    for (let i = 0; i < pacmanMaze.length; i++) {
-        for (let j = 0; j < pacmanMaze.length; j++) {
-            if (pacmanMaze[i][j] === 2) board[i][j] = actors.obstacles;
-        }
-    }
-
-    for (let i = 0; i < board.length; i++) {
-        for (let j = 0; j < board.length; j++) {
-            dark_side_board[i][j] = board[i][j];
-        }
-    }
-}
-
-function userExists(userName) {
-    for (var i = 0; i < users.length; i++) {
-        if (users[i].username === userName) return true;
-    }
-    return false;
-}
-
 $(document).ready(function () {
     var first_person = {
         firstName: "Corona",
@@ -202,7 +113,20 @@ $(document).ready(function () {
         active_user = "";
         afterLogout();
         stopMusic();
-        cleanBeforeNewGame();
+        {
+            window.clearInterval(interval);
+            cold_start = true;
+            get_bonus = false;
+            poison_mode = false;
+            clearTimeout(poison_timeout);
+            gift_mode = false;
+            clearTimeout(gift_timeout);
+            pac_color = "yellow";
+            gameOver = false;
+            blue_ghost_shape = null;
+            pink_ghost_shape = null;
+            yellow_ghost_shape = null;
+        }
         hearts = 2; //actually 3
         gameOver = false;
         clearInterval(countDownTimer);
@@ -313,6 +237,93 @@ $(document).ready(function () {
         return email.match(re);
     }
 });
+$("#alert_register").hide();
+$("#alert_login").hide();
+
+function afterRegister() {
+    $("#register").hide();
+    $("#login").show();
+}
+
+function afterLogin() {
+    $("#welcome").show();
+    $("#game").hide();
+    $("#login").hide();
+    $("#game_user").show();
+    $("#register").hide();
+    $("#register_user").hide();
+    $("#login_user").hide();
+    $("#logout_user").show();
+    $("#btn_login").hide();
+    $("#btn_register").hide();
+    $("#player_name").empty();
+    var user_fullname = active_user.firstName + " " + active_user.lastName;
+    $("#player_name").html(user_fullname);
+    $("#welcome_text").text("You may play now!");
+    $("#btn_play").show();
+}
+
+function afterLogout() {
+    $("#welcome").show();
+    $("#game").hide();
+    $("#login").hide();
+    $("#register").hide();
+    $("#game_user").hide();
+    $("#alredy_login").hide();
+    $("#register_user").show();
+    $("#login_user").show();
+    $("#logout_user").hide();
+    $("#btn_login").show();
+    $("#btn_register").show();
+    $("#btn_play").hide();
+    $("#welcome_text").text(
+        "Please login if you already have an account. If you don't, what are you waiting for? Go register!"
+    );
+}
+
+function map1(board, dark_side_board) {
+    var pacmanMaze = [
+        [0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0],
+        [0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0],
+        [2, 0, 2, 2, 0, 2, 0, 2, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 2],
+        [2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 2, 2, 2, 2, 2],
+        [2, 2, 0, 2, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 0, 0, 2, 0, 2, 2, 2, 0, 0, 0, 2, 2, 0, 0, 0, 2, 2, 2],
+        [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 2, 2, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 2],
+        [2, 0, 0, 2, 0, 0, 0, 2, 0, 0, 2, 2, 0, 0, 2, 0, 0, 0, 2],
+        [2, 0, 2, 2, 0, 2, 2, 0, 0, 0, 2, 2, 0, 0, 2, 0, 0, 0, 2],
+        [2, 2, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 2, 2, 2],
+        [2, 0, 2, 0, 0, 0, 0, 2, 0, 0, 2, 0, 2, 0, 0, 0, 0, 0, 2],
+        [2, 0, 2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 2],
+        [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 0, 0, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 0, 2, 2, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 0, 0, 2, 0, 0, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2],
+        [2, 2, 0, 2, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2],
+        [0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 2, 2, 2, 2, 2, 2, 0, 0, 2, 2, 2, 2, 2, 2, 2, 0, 0],
+    ];
+
+    for (let i = 0; i < pacmanMaze.length; i++) {
+        for (let j = 0; j < pacmanMaze.length; j++) {
+            if (pacmanMaze[i][j] === 2) board[i][j] = actors.obstacles;
+        }
+    }
+
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board.length; j++) {
+            dark_side_board[i][j] = board[i][j];
+        }
+    }
+}
+
+function userExists(userName) {
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].username === userName) return true;
+    }
+    return false;
+}
 
 function drawMessageBox(color, message, font_size) {
     context.beginPath();
@@ -326,7 +337,6 @@ function drawMessageBox(color, message, font_size) {
     context.fillStyle = "black"; //color
     context.fillText(message, board_width / 5, board_height / 2);
 }
-
 function printTime(time_left_seconds) {
     var minutes = Math.floor(time_left_seconds / 60);
     var seconds = Math.floor(time_left_seconds % 60);
@@ -336,7 +346,6 @@ function printTime(time_left_seconds) {
 
     return minutes + ":" + seconds;
 }
-
 function printHearts(number_of_hearts) {
     if (number_of_hearts === 0) return "☠";
     var ascii_heart = "❤";
