@@ -31,8 +31,13 @@ let board, dark_side_board;
 let gameOver = false;
 let pac_man_shape = {},
     moving_food_shape = {};
-$("#container_game").hide();
 $(document).ready(function () {
+    hideAll();
+    $("#container_game").hide();
+    $("#logout_user").hide();
+    $("#game_user").hide();
+    $("#btn_play").hide();
+    $("#welcome").show();
     function resize() {
         let size =
             $(window).height() -
@@ -214,6 +219,7 @@ function Start() {
 }
 
 function updatePosition() {
+    let message_to_draw;
     board[pac_man_shape.i][pac_man_shape.j] = actors.nothing;
     const x = getKeyPressed();
     updatePacman(x);
@@ -222,7 +228,7 @@ function updatePosition() {
         cold_start = false;
         countDownTimer = setInterval(countDown, 1000);
     } else if (cold_start) {
-        var message_to_draw = "Press a directional arrow to begin";
+        message_to_draw = "Press a directional arrow to begin";
         drawMessageBox("#9b6161", message_to_draw, getPixelSize(message_to_draw));
     } else {
         if (board[pac_man_shape.i][pac_man_shape.j] === actors.p5_ball) score += 5;
@@ -304,7 +310,7 @@ function updatePosition() {
                 stopMusic();
                 win_sound.play();
                 win_sound.currentTime = 0;
-                var message_to_draw = "We have a Winner!!!";
+                message_to_draw = "We have a Winner!!!";
                 drawMessageBox(
                     "#9b6161",
                     message_to_draw,

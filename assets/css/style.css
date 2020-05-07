@@ -1,130 +1,131 @@
 * {
-    cursor: url(http://cur.cursors-4u.net/cursors/cur-11/cur1054.cur), auto !important;
+  cursor: url(http://cur.cursors-4u.net/cursors/cur-11/cur1054.cur), auto !important;
 }
 
 html {
-    background: url("http://www.classicgaming.cc/classics/pac-man/images/web/seamless-background-pac-man-wall-pattern.jpg") scroll;
-}
-
-.navbar {
-    overflow: hidden;
-    background-color: white;
-    position: fixed;
-    z-index: 10;
-    top: 0;
-    width: 100%;
+  background: url("http://www.classicgaming.cc/classics/pac-man/images/web/seamless-background-pac-man-wall-pattern.jpg")
+    scroll;
 }
 
 @font-face {
-    font-family: pacmanfont;
-    src: url("font/PressStart2P.ttf");
+  font-family: pacmanfont;
+  src: url("font/PressStart2P.ttf");
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: white;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  width: 100%;
 }
 
 .navbar a {
-    font-family: "pacmanfont", monospace;
-    float: left;
-    display: block;
-    color: #ffffff;
-    padding: 1px 30px;
-    text-decoration: none;
-    font-size: 10.5px;
+  font-family: "pacmanfont", monospace;
+  float: left;
+  display: block;
+  color: #ffffff;
+  padding: 1px 30px;
+  text-decoration: none;
+  font-size: 11px;
 }
 
 .navbar a:hover {
-    background: #7a7a7a;
-    color: #fded11;
+  background: #7a7a7a;
+  color: #fded11;
 }
 
 body {
-    background: url("http://www.classicgaming.cc/classics/pac-man/images/web/seamless-background-pac-man-wall-pattern.jpg");
-    margin-bottom: 60px;
+  background: url("http://www.classicgaming.cc/classics/pac-man/images/web/seamless-background-pac-man-wall-pattern.jpg");
+  margin-bottom: 60px;
 }
 
 .jumbotron {
-    background-color: transparent !important;
-    color: white;
-    font-family: pacmanfont;
-    font-size: 15px !important;
-    width: 50% !important;
-    margin-left: auto;
-    margin-right: auto;
+  background-color: transparent !important;
+  color: white;
+  font-family: pacmanfont, sans-serif;
+  font-size: 15px !important;
+  width: 50% !important;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .display-4 {
-    font-family: pacmanfont;
-    font-size: 24pt !important;
+  font-family: pacmanfont, sans-serif;;
+  font-size: 24pt !important;
 }
 
 .lead {
-    padding: 1%;
-    font-size: 12px !important;
+  padding: 1%;
+  font-size: 12px !important;
 }
 
 .logo-center {
-    padding: 1pt;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 30%;
-    border: 5px solid whitesmoke;
+  padding: 1pt;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+  border: 5px solid whitesmoke;
 }
 
 .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    /* Set the fixed height of the footer here */
-    height: 60px;
-    line-height: 60px; /* Vertically center the text there */
-    background-color: transparent;
-    text-align: left;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px; /* Vertically center the text there */
+  background-color: transparent;
+  text-align: left;
 }
 
 .footer .container .text-muted:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 #game {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
 }
 
 canvas#canvas {
-    margin-top: 15px;
-    background-color: #29293b;
-    padding: 15px;
+  margin-top: 15px;
+  background-color: #29293b;
+  padding: 15px;
 }
 
 .col-sm {
-    display: table;
-    float: right;
-    height: 65px;
-    font-size: 15px;
+  display: table;
+  float: right;
+  height: 65px;
+  font-size: 15px;
 }
 
 .col-sm span {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
 }
 
 #logo_name {
-    font-family: "pacmanfont", cursive;
-    font-size: 20px;
-    color: #fded11;
+  font-family: "pacmanfont", cursive;
+  font-size: 20px;
+  color: #fded11;
 }
 
 input#lblTime,
 input#lblScore {
-    background-color: black;
-    color: red;
-    text-align: center;
-    font-family: "pacmanfont", cursive;
+  background-color: black;
+  color: red;
+  text-align: center;
+  font-family: "pacmanfont", cursive;
 }
 
 input#lblHeart {
-    background-color: black;
+  background-color: black;
 }
 
 /* Custom page CSS
@@ -132,70 +133,64 @@ input#lblHeart {
 /* Not required for template or sticky footer method. */
 
 body > .container {
-    padding: 60px 15px 0;
-}
-
-.footer > .container {
-    padding-right: 15px;
-    padding-left: 15px;
+  padding: 60px 15px 0;
 }
 
 code {
-    font-size: 80%;
+  font-size: 80%;
 }
 
 .form-signin {
-    width: 100%;
-    max-width: 330px;
-    padding: 15px;
-    margin: 0 auto;
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
 }
 
 .form-signin .form-control {
-    position: relative;
-    box-sizing: border-box;
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
 }
 
 .form-signin .form-control:focus {
-    z-index: 2;
+  z-index: 2;
 }
 
 .form-signin input[type="email"] {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
 .form-signin input[type="password"] {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 #alert_register {
-    color: #ab0717;
-    text-decoration: bold;
+  color: #ab0717;
 }
 
 img#welcome_gif {
-    margin-top: 10px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  margin-top: 10px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 img#logo_svg {
-    width: 35px;
-    height: 35px;
-    vertical-align: baseline;
+  width: 35px;
+  height: 35px;
+  vertical-align: baseline;
 }
 
 a.credit {
-    margin-right: 5px;
-    margin-left: 5px;
-    text-decoration: underline;
-    font-size: 18px;
+  margin-right: 5px;
+  margin-left: 5px;
+  text-decoration: underline;
+  font-size: 18px;
 }

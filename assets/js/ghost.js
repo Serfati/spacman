@@ -1,12 +1,12 @@
-var red_ghost_shape = {},
-    blue_ghost_shape = null,
+let red_ghost_shape = {};
+let blue_ghost_shape = null,
     pink_ghost_shape = null;
 yellow_ghost_shape = null;
 
 function insertGhost(x_center, y_center, color) {
-    var c = document.getElementById("canvas");
-    var ctx = c.getContext("2d");
-    var img = new Image();
+    const c = document.getElementById("canvas");
+    const ctx = c.getContext("2d");
+    const img = new Image();
     img.src = "assets/images/" + color + "_ghost.gif";
     ctx.drawImage(
         img,
@@ -18,17 +18,17 @@ function insertGhost(x_center, y_center, color) {
 }
 
 function findOptimalPathToPacMan(x, y) {
-    var options = findOptionalMoves(x, y);
+    const options = findOptionalMoves(x, y);
 
-    var choice = options[0];
-    var minManhattanDist = manhattanDistance(
+    let choice = options[0];
+    let minManhattanDist = manhattanDistance(
         pac_man_shape.i,
         pac_man_shape.j,
         choice.x,
         choice.y
     );
 
-    for (var k = 1; k < options.length; k++) {
+    for (let k = 1; k < options.length; k++) {
         if (
             manhattanDistance(
                 pac_man_shape.i,
@@ -55,11 +55,11 @@ function manhattanDistance(x1, y1, x2, y2) {
 }
 
 function findLongPathToPacMan(x, y) {
-    var options = findOptionalMoves(x, y);
-    var max = 0;
-    var max_index = 0;
-    var temp_max = 0;
-    for (var k = 0; k < options.length; k++) {
+    const options = findOptionalMoves(x, y);
+    let max = 0;
+    let max_index = 0;
+    let temp_max = 0;
+    for (let k = 0; k < options.length; k++) {
         temp_max = Math.sqrt(
             Math.pow(pac_man_shape.i - options[k].x, 2) +
             Math.pow(pac_man_shape.j - options[k].y, 2)
@@ -73,13 +73,13 @@ function findLongPathToPacMan(x, y) {
 }
 
 function randomMove(x, y) {
-    var options = findOptionalMoves(x, y);
-    var choice = Math.floor(Math.random() * options.length);
+    const options = findOptionalMoves(x, y);
+    const choice = Math.floor(Math.random() * options.length);
     return options[choice];
 }
 
 function updateGhosts() {
-    var pair_red;
+    let pair_red;
     if (!gift_mode) {
         var randomPath = Math.random();
         if (randomPath <= 0.2)
@@ -93,7 +93,7 @@ function updateGhosts() {
     red_ghost_shape.j = pair_red.y;
 
     if (blue_ghost_shape != null) {
-        var pair_blue;
+        let pair_blue;
         if (!gift_mode) {
             var randomPath = Math.random();
             if (randomPath <= 0.25)
@@ -112,7 +112,7 @@ function updateGhosts() {
     }
 
     if (pink_ghost_shape != null) {
-        var pair_pink;
+        let pair_pink;
         if (!gift_mode) {
             var randomPath = Math.random();
             if (randomPath <= 0.25)
@@ -131,7 +131,7 @@ function updateGhosts() {
     }
 
     if (yellow_ghost_shape != null) {
-        var pair_yellow;
+        let pair_yellow;
         if (!gift_mode) {
             var randomPath = Math.random();
             if (randomPath <= 0.25)

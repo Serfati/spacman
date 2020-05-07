@@ -1,5 +1,5 @@
 let score = 0,
-    goal_score = 220;
+    goal_score = 250;
 let pac_color = "yellow",
     last_move = 1;
 let time_left, interval;
@@ -25,7 +25,7 @@ let counter = 0,
     food_counter = 0,
     hearts = 4;
 let number_of_ghost = 3;
-$("#finish_pref").click(function () {
+let click = $("#finish_pref").click(function () {
     const temp_ball_num = $("#ball_numm").val();
     if (temp_ball_num >= 50 && temp_ball_num <= 90)
         number_of_balls = temp_ball_num;
@@ -45,14 +45,11 @@ $("#finish_pref").click(function () {
     if (temp_level >= 1 && temp_level <= 10) level = temp_level;
     else level = 6;
 
-    const temp_p5color = $("#5points").val();
-    p5color = temp_p5color;
+    p5color = $("#5points").val();
 
-    const temp_p15color = $("#15points").val();
-    p15color = temp_p15color;
+    p15color = $("#15points").val();
 
-    const temp_p25color = $("#25points").val();
-    p25color = temp_p25color;
+    p25color = $("#25points").val();
 
     const key_up = $("#key_up").keypress(function (e) {
         if (e.which === "38") {
