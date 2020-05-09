@@ -25,6 +25,104 @@ let counter = 0,
     food_counter = 0,
     hearts = 4;
 let number_of_ghost = 3;
+$(document).ready(function () {
+    hideAll();
+    $("#container_game").hide();
+    $("#logout_user").hide();
+    $("#game_user").hide();
+    $("#btn_play").hide();
+    $("#welcome").show();
+    function resize() {
+        let size =
+            $(window).height() -
+            $("#canvas").offset().top -
+            Math.abs($("#canvas").outerHeight(true) - $("#canvas").outerHeight());
+        size *= 7 / 10;
+        document.getElementById("canvas").height = size;
+        document.getElementById("canvas").width = size;
+        canvasWidth = document.getElementById("canvas").width;
+        canvasHeight = document.getElementById("canvas").height;
+        sprite_size = canvasWidth / board_size; //dynamically scale character size according to board size
+        if (gameOver) {
+            draw();
+            if (hearts > 0) {
+                if (score >= goal_score) {
+                    var massage_to_draw = "We have a Winner!!!";
+                    aletrtBox(
+                        "#9b6161",
+                        massage_to_draw,
+                        getPixelSize(massage_to_draw)
+                    );
+                } else {
+                    var massage_to_draw = "You can do better.. " + score;
+                    aletrtBox(
+                        "#9b6161",
+                        massage_to_draw,
+                        getPixelSize(massage_to_draw)
+                    );
+                }
+            } else {
+                var massage_to_draw = "You Lost!";
+                aletrtBox(
+                    "yellow",
+                    massage_to_draw,
+                    getPixelSize(massage_to_draw)
+                );
+            }
+        }
+    }
+
+    resize();
+    $(window).on("resize", function () {
+        resize();
+    });
+    window.addEventListener(
+        "keydown",
+        function (e) {
+            // space and arrow keys
+            if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+                e.preventDefault();
+            }
+        },
+        false
+    );
+    $("#re_game").click(function () {
+        {
+            window.clearInterval(interval);
+            cold_start = true;
+            get_bonus = false;
+            poison_mode = false;
+            clearTimeout(poison_timeout);
+            gift_mode = false;
+            clearTimeout(gift_timeout);
+            gameOver = false;
+            blue_ghost_shape = null;
+            pink_ghost_shape = null;
+            yellow_ghost_shape = null;
+        }
+        lblHeart.value = printHearts(hearts + 1);
+        bg_music.pause();
+        bg_music.currentTime = 0;
+        gameOver = false;
+        clearInterval(countDownTimer);
+        time_left = max_game_time;
+        Start();
+    });
+    $("#nav_game").click(function () {
+        hideAll();
+        $("#game").show();
+        $("#container_pre_game").show();
+        $("#container_game").hide();
+        $("#ball_numm").val("50");
+        $("#ghost_num").val("3");
+        $("#game_time").val("60");
+        $("#level_check").val("6");
+        stopMusic();
+        window.clearInterval(interval);
+        window.clearInterval(countDownTimer);
+    });
+});
+
 let click = $("#finish_pref").click(function () {
     const temp_ball_num = $("#ball_numm").val();
     if (temp_ball_num >= 50 && temp_ball_num <= 90)
@@ -137,6 +235,3 @@ function setMusic() {
         false
     );
 }
-
-
-

@@ -1,4 +1,3 @@
-
 $("#btn_login, #nav_login").click(function () {
   hideAll();
   $("#login").show();
@@ -52,7 +51,6 @@ function hideAll() {
   $("#game").hide();
   $("#login").hide();
   $("#register").hide();
-  $("#already_login").hide();
   $("#about").hide();
 }
 
@@ -104,14 +102,42 @@ $(document).ready(function () {
     } else {
       user_login = true;
       active_user = user;
-      afterLogin();
+      $("#welcome").show();
+      $("#game").hide();
+      $("#login").hide();
+      $("#game_user").show();
+      $("#register").hide();
+      $("#register_user").hide();
+      $("#login_user").hide();
+      $("#logout_user").show();
+      $("#btn_login").hide();
+      $("#btn_register").hide();
+      $("#player_name").empty();
+      const user_fullname = active_user.firstName + " " + active_user.lastName;
+      $("#player_name").html(user_fullname);
+      $("#welcome_text").text("You may play now!");
+      $("#btn_play").show();
     }
   });
 
   $("#logout_user").click(function () {
     user_login = false;
     active_user = "";
-    afterLogout();
+    $("#welcome").show();
+    $("#game").hide();
+    $("#login").hide();
+    $("#register").hide();
+    $("#game_user").hide();
+    $("#already_login").hide();
+    $("#register_user").show();
+    $("#login_user").show();
+    $("#logout_user").hide();
+    $("#btn_login").show();
+    $("#btn_register").show();
+    $("#btn_play").hide();
+    $("#welcome_text").text(
+        "Please login/Register if you already have an account"
+    );
     stopMusic();
     {
       window.clearInterval(interval);
@@ -202,9 +228,17 @@ $(document).ready(function () {
       $("#alert_details").html(message);
       $("#alert_register").show();
     } else {
-      const person = {firstName, lastName, username, password, email, birthday};
+      const person = {
+        firstName,
+        lastName,
+        username,
+        password,
+        email,
+        birthday,
+      };
       users.push(person);
-      afterRegister();
+      $("#register").hide();
+      $("#login").show();
     }
   });
 
@@ -253,46 +287,17 @@ $(document).ready(function () {
 $("#alert_register").hide();
 $("#alert_login").hide();
 
-function afterRegister() {
-  $("#register").hide();
-  $("#login").show();
-}
+var modal = document.getElementById("about_c");
 
-function afterLogin() {
-  $("#welcome").show();
-  $("#game").hide();
-  $("#login").hide();
-  $("#game_user").show();
-  $("#register").hide();
-  $("#register_user").hide();
-  $("#login_user").hide();
-  $("#logout_user").show();
-  $("#btn_login").hide();
-  $("#btn_register").hide();
-  $("#player_name").empty();
-  const user_fullname = active_user.firstName + " " + active_user.lastName;
-  $("#player_name").html(user_fullname);
-  $("#welcome_text").text("You may play now!");
-  $("#btn_play").show();
-}
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
 
-function afterLogout() {
-  $("#welcome").show();
-  $("#game").hide();
-  $("#login").hide();
-  $("#register").hide();
-  $("#game_user").hide();
-  $("#already_login").hide();
-  $("#register_user").show();
-  $("#login_user").show();
-  $("#logout_user").hide();
-  $("#btn_login").show();
-  $("#btn_register").show();
-  $("#btn_play").hide();
-  $("#welcome_text").text(
-    "Please login if you already have an account. If you don't, what are you waiting for? Go register!"
-  );
-}
+$(document).keyup(function (ev) {
+  if (ev.keyCode == 27) $("#about_c").trigger("click");
+});
 
 function map1(board, dark_side_board) {
   const pacmanMaze = [
@@ -338,7 +343,7 @@ function userExists(userName) {
   return false;
 }
 
-function drawMessageBox(color, message, font_size) {
+function aletrtBox(color, message, font_size) {
   context.beginPath();
   board_width = document.getElementById("canvas").width;
   board_height = document.getElementById("canvas").height;
@@ -360,13 +365,8 @@ function printTime(time_left_seconds) {
   return minutes + ":" + seconds;
 }
 function printHearts(number_of_hearts) {
-  if (number_of_hearts === 0) return "☠";
-  const ascii_heart = "❤";
   let toPrint = "";
-
-  for (let i = 0; i < number_of_hearts; i += 1) {
-    toPrint += ascii_heart;
-  }
-
+  for (let i = 0; i < number_of_hearts; i += 1)
+    toPrint += "❤";
   return toPrint;
 }

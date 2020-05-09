@@ -1,7 +1,7 @@
 let red_ghost_shape = {};
 let blue_ghost_shape = null,
-    pink_ghost_shape = null;
-yellow_ghost_shape = null;
+    pink_ghost_shape = null,
+    yellow_ghost_shape = null;
 
 function insertGhost(x_center, y_center, color) {
     const c = document.getElementById("canvas");
@@ -54,24 +54,6 @@ function manhattanDistance(x1, y1, x2, y2) {
     return Math.abs(x1 - x2) + Math.abs(y1 - y2);
 }
 
-function findLongPathToPacMan(x, y) {
-    const options = findOptionalMoves(x, y);
-    let max = 0;
-    let max_index = 0;
-    let temp_max = 0;
-    for (let k = 0; k < options.length; k++) {
-        temp_max = Math.sqrt(
-            Math.pow(pac_man_shape.i - options[k].x, 2) +
-            Math.pow(pac_man_shape.j - options[k].y, 2)
-        );
-        if (temp_max > max) {
-            max = temp_max;
-            max_index = k;
-        }
-    }
-    return options[max_index];
-}
-
 function randomMove(x, y) {
     const options = findOptionalMoves(x, y);
     const choice = Math.floor(Math.random() * options.length);
@@ -80,13 +62,11 @@ function randomMove(x, y) {
 
 function updateGhosts() {
     let pair_red;
-    if (!gift_mode) {
-        var randomPath = Math.random();
-        if (randomPath <= 0.2)
+    let randomPath = Math.random();
+    if (randomPath <= 0.2)
             pair_red = randomMove(red_ghost_shape.i, red_ghost_shape.j);
         else
             pair_red = findOptimalPathToPacMan(red_ghost_shape.i, red_ghost_shape.j);
-    } else pair_red = findLongPathToPacMan(red_ghost_shape.i, red_ghost_shape.j);
     dark_side_board[red_ghost_shape.i][red_ghost_shape.j] = 0;
     dark_side_board[pair_red.x][pair_red.y] = 5;
     red_ghost_shape.i = pair_red.x;
@@ -94,17 +74,14 @@ function updateGhosts() {
 
     if (blue_ghost_shape != null) {
         let pair_blue;
-        if (!gift_mode) {
-            var randomPath = Math.random();
-            if (randomPath <= 0.25)
+        randomPath = Math.random();
+        if (randomPath <= 0.25)
                 pair_blue = randomMove(blue_ghost_shape.i, blue_ghost_shape.j);
             else
                 pair_blue = findOptimalPathToPacMan(
                     blue_ghost_shape.i,
                     blue_ghost_shape.j
                 );
-        } else
-            pair_blue = findLongPathToPacMan(blue_ghost_shape.i, blue_ghost_shape.j);
         dark_side_board[blue_ghost_shape.i][blue_ghost_shape.j] = 0;
         dark_side_board[pair_blue.x][pair_blue.y] = 6;
         blue_ghost_shape.i = pair_blue.x;
@@ -113,8 +90,7 @@ function updateGhosts() {
 
     if (pink_ghost_shape != null) {
         let pair_pink;
-        if (!gift_mode) {
-            var randomPath = Math.random();
+            randomPath = Math.random();
             if (randomPath <= 0.25)
                 pair_pink = randomMove(pink_ghost_shape.i, pink_ghost_shape.j);
             else
@@ -122,8 +98,6 @@ function updateGhosts() {
                     pink_ghost_shape.i,
                     pink_ghost_shape.j
                 );
-        } else
-            pair_pink = findLongPathToPacMan(pink_ghost_shape.i, pink_ghost_shape.j);
         dark_side_board[pink_ghost_shape.i][pink_ghost_shape.j] = 0;
         dark_side_board[pair_pink.x][pair_pink.y] = 7;
         pink_ghost_shape.i = pair_pink.x;
@@ -132,8 +106,7 @@ function updateGhosts() {
 
     if (yellow_ghost_shape != null) {
         let pair_yellow;
-        if (!gift_mode) {
-            var randomPath = Math.random();
+            randomPath = Math.random();
             if (randomPath <= 0.25)
                 pair_yellow = randomMove(yellow_ghost_shape.i, yellow_ghost_shape.j);
             else
@@ -141,11 +114,6 @@ function updateGhosts() {
                     yellow_ghost_shape.i,
                     yellow_ghost_shape.j
                 );
-        } else
-            pair_yellow = findLongPathToPacMan(
-                yellow_ghost_shape.i,
-                yellow_ghost_shape.j
-            );
         dark_side_board[yellow_ghost_shape.i][yellow_ghost_shape.j] = 0;
         dark_side_board[pair_yellow.x][pair_yellow.y] = 7;
         yellow_ghost_shape.i = pair_yellow.x;
@@ -211,18 +179,4 @@ function checkCollisions() {
         Finish();
         return true;
     }
-}
-function clearGhosts() {
-    dark_side_board[red_ghost_shape.i][red_ghost_shape.j] = actors.nothing;
-    dark_side_board[moving_food_shape.i][moving_food_shape.j] = actors.nothing;
-
-    if (number_of_ghost >= 2)
-        dark_side_board[blue_ghost_shape.i][blue_ghost_shape.j] = actors.nothing;
-
-    if (number_of_ghost >= 3)
-        dark_side_board[pink_ghost_shape.i][pink_ghost_shape.j] = actors.nothing;
-
-    if (number_of_ghost >= 4)
-        dark_side_board[yellow_ghost_shape.i][yellow_ghost_shape.j] =
-            actors.nothing;
 }

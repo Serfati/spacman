@@ -29,105 +29,8 @@ let sprite_size = 60,
     canvasHeight;
 let board, dark_side_board;
 let gameOver = false;
-let pac_man_shape = {},
-    moving_food_shape = {};
-$(document).ready(function () {
-    hideAll();
-    $("#container_game").hide();
-    $("#logout_user").hide();
-    $("#game_user").hide();
-    $("#btn_play").hide();
-    $("#welcome").show();
-    function resize() {
-        let size =
-            $(window).height() -
-            $("#canvas").offset().top -
-            Math.abs($("#canvas").outerHeight(true) - $("#canvas").outerHeight());
-        size *= 7 / 10;
-        document.getElementById("canvas").height = size;
-        document.getElementById("canvas").width = size;
-        canvasWidth = document.getElementById("canvas").width;
-        canvasHeight = document.getElementById("canvas").height;
-        sprite_size = canvasWidth / board_size; //dynamically scale character size according to board size
-        if (gameOver) {
-            draw();
-            if (hearts > 0) {
-                if (score >= goal_score) {
-                    var massage_to_draw = "We have a Winner!!!";
-                    drawMessageBox(
-                        "#9b6161",
-                        massage_to_draw,
-                        getPixelSize(massage_to_draw)
-                    );
-                } else {
-                    var massage_to_draw = "You can do better.. " + score;
-                    drawMessageBox(
-                        "#9b6161",
-                        massage_to_draw,
-                        getPixelSize(massage_to_draw)
-                    );
-                }
-            } else {
-                var massage_to_draw = "You Lost!";
-                drawMessageBox(
-                    "yellow",
-                    massage_to_draw,
-                    getPixelSize(massage_to_draw)
-                );
-            }
-        }
-    }
+let pac_man_shape = {};
 
-    resize();
-    $(window).on("resize", function () {
-        resize();
-    });
-    window.addEventListener(
-        "keydown",
-        function (e) {
-            // space and arrow keys
-            if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
-                e.preventDefault();
-            }
-        },
-        false
-    );
-    $("#re_game").click(function () {
-        {
-            window.clearInterval(interval);
-            cold_start = true;
-            get_bonus = false;
-            poison_mode = false;
-            clearTimeout(poison_timeout);
-            gift_mode = false;
-            clearTimeout(gift_timeout);
-            gameOver = false;
-            blue_ghost_shape = null;
-            pink_ghost_shape = null;
-            yellow_ghost_shape = null;
-        }
-        lblHeart.value = printHearts(hearts + 1);
-        bg_music.pause();
-        bg_music.currentTime = 0;
-        gameOver = false;
-        clearInterval(countDownTimer);
-        time_left = max_game_time;
-        Start();
-    });
-    $("#nav_game").click(function () {
-        hideAll();
-        $("#game").show();
-        $("#container_pre_game").show();
-        $("#container_game").hide();
-        $("#ball_numm").val("50");
-        $("#ghost_num").val("3");
-        $("#game_time").val("60");
-        $("#level_check").val("6");
-        stopMusic();
-        window.clearInterval(interval);
-        window.clearInterval(countDownTimer);
-    });
-});
 
 function getPixelSize(message) {
     const pixelWithCanvas = document.getElementById("canvas").width / 60;
@@ -182,14 +85,7 @@ function Start() {
     var emptyCell = findRandomEmptyCell(board), x_cell = emptyCell[0], y_cell = emptyCell[1];
     board[x_cell][y_cell] = actors.poison;
 
-    emptyCell = findRandomEmptyCell(board);
-    x_cell = emptyCell[0];
-    y_cell = emptyCell[1];
-    board[x_cell][y_cell] = actors.gift;
 
-    dark_side_board[board_size - 1][board_size - 1] = actors.moving_food;
-    moving_food_shape.i = board_size - 1;
-    moving_food_shape.j = board_size - 1;
 
     gameOver = false;
     cold_start = true;
@@ -229,7 +125,7 @@ function updatePosition() {
         countDownTimer = setInterval(countDown, 1000);
     } else if (cold_start) {
         message_to_draw = "Press a directional arrow to begin";
-        drawMessageBox("#9b6161", message_to_draw, getPixelSize(message_to_draw));
+        aletrtBox("#9b6161", message_to_draw, getPixelSize(message_to_draw));
     } else {
         if (board[pac_man_shape.i][pac_man_shape.j] === actors.p5_ball) score += 5;
         if (board[pac_man_shape.i][pac_man_shape.j] === actors.p15_ball)
@@ -256,43 +152,19 @@ function updatePosition() {
                 }, 5000);
             }
         }
-
-        if (board[pac_man_shape.i][pac_man_shape.j] === actors.gift) {
-            {
-                cherry_sound.play();
-                cherry_sound.currentTime = 0;
-                gift_mode = true;
-                pac_color = "Orange";
-
-                gift_timeout = setTimeout(function () {
-                    gift_mode = false;
-                    pac_color = "yellow";
-                }, 5000);
-            }
-        }
-
-        if (!get_bonus && checkCollisionWithMovingFood()) get_bonus = true;
         checkCollisions();
 
         if (!cold_start) {
             if (counter === max_level - level) {
                 updateGhosts();
                 counter = 0;
-                if (!get_bonus && checkCollisionWithMovingFood()) get_bonus = true;
 
                 if (!get_bonus)
                     if (food_counter === 1) {
                         {
-                            const options = findOptionalMoves(moving_food_shape.i, moving_food_shape.j);
-
                             min = Math.ceil(0);
                             max = Math.floor(options.length - 1);
                             const index = Math.floor(Math.random() * (max - min)) + min;
-                            const pair_food = options[index];
-                            dark_side_board[moving_food_shape.i][moving_food_shape.j] = actors.nothing;
-                            dark_side_board[pair_food.x][pair_food.y] = actors.moving_food;
-                            moving_food_shape.i = pair_food.x;
-                            moving_food_shape.j = pair_food.y;
                         }
                         food_counter = 0;
                     } else food_counter = 1;
@@ -311,7 +183,7 @@ function updatePosition() {
                 win_sound.play();
                 win_sound.currentTime = 0;
                 message_to_draw = "We have a Winner!!!";
-                drawMessageBox(
+                aletrtBox(
                     "#9b6161",
                     message_to_draw,
                     getPixelSize(message_to_draw)
@@ -359,8 +231,6 @@ function draw() {
                 );
             else if (board[i][j] === actors.poison)
                 insertPill(center.x, center.y, "green");
-            else if (board[i][j] === actors.gift)
-                insertPill(center.x, center.y, "orange");
             /* dark side board characters */
             if (dark_side_board[i][j] === actors.red)
                 insertGhost(center.x, center.y, "red");
@@ -370,19 +240,7 @@ function draw() {
                 insertGhost(center.x, center.y, "yellow");
             else if (dark_side_board[i][j] === actors.pink)
                 insertGhost(center.x, center.y, "pink");
-            else if (dark_side_board[i][j] === actors.moving_food && !get_bonus) {
-                var c = document.getElementById("canvas");
-                var ctx = c.getContext("2d");
-                var img = new Image();
-                img.src = "assets/images/cherry2.svg";
-                ctx.drawImage(
-                    img,
-                    center.x,
-                    center.y,
-                    1 * (canvasWidth / board_size),
-                    1 * (canvasHeight / board_size)
-                );
-            } else if (dark_side_board[i][j] === actors.obstacles) {
+            else if (dark_side_board[i][j] === actors.obstacles) {
 
                 var c = document.getElementById("canvas");
                 var ctx = c.getContext("2d");
@@ -452,10 +310,19 @@ function Finish() {
             gameOver = false;
             poison_mode = false;
             clearTimeout(poison_timeout);
-            gift_mode = false;
-            clearTimeout(gift_timeout);
             pac_color = "yellow";
-            clearGhosts();
+            dark_side_board[red_ghost_shape.i][red_ghost_shape.j] = actors.nothing;
+            dark_side_board[moving_food_shape.i][moving_food_shape.j] = actors.nothing;
+
+            if (number_of_ghost >= 2)
+                dark_side_board[blue_ghost_shape.i][blue_ghost_shape.j] = actors.nothing;
+
+            if (number_of_ghost >= 3)
+                dark_side_board[pink_ghost_shape.i][pink_ghost_shape.j] = actors.nothing;
+
+            if (number_of_ghost >= 4)
+                dark_side_board[yellow_ghost_shape.i][yellow_ghost_shape.j] =
+                    actors.nothing;
             putGhosts();
             board[pac_man_shape.i][pac_man_shape.j] = actors.nothing;
             insertPacMan();
@@ -473,10 +340,10 @@ function Finish() {
         lblHeart.value = printHearts(0);
         if (hearts === 0) {
             var message_to_draw = "You Lost!";
-            drawMessageBox("#9b6161", message_to_draw, getPixelSize(message_to_draw));
+            aletrtBox("#9b6161", message_to_draw, getPixelSize(message_to_draw));
         } else if (score <= goal_score) {
             var message_to_draw = "You can do better.." + score;
-            drawMessageBox("#9b6161", message_to_draw, getPixelSize(message_to_draw));
+            aletrtBox("#9b6161", message_to_draw, getPixelSize(message_to_draw));
         }
     }
     hit_sound.currentTime = 0;
@@ -676,23 +543,9 @@ function isClear(x, y) {
     let cellIsClear;
     cellIsClear =
         board[x][y] !== actors.obstacles &&
-        dark_side_board[x][y] !== actors.moving_food &&
         dark_side_board[x][y] !== actors.red &&
         dark_side_board[x][y] !== actors.blue &&
         dark_side_board[x][y] !== actors.pink;
 
     return cellIsClear;
-}
-
-function checkCollisionWithMovingFood() {
-    if (
-        moving_food_shape.i === pac_man_shape.i &&
-        moving_food_shape.j === pac_man_shape.j
-    ) {
-        cherry_sound.play();
-        score += bonus_score;
-        dark_side_board[moving_food_shape.i][moving_food_shape.j] = actors.nothing;
-        cherry_sound.currentTime = 0;
-        return true;
-    }
 }
