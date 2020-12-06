@@ -51,13 +51,6 @@ google-chrome index.html
 
 <br>
 
-**_Team Members_**:
-
-| Name             | Username                                    | Contact Info              | ID        |
-| ---------------- | ------------------------------------------- | ------------------------- | --------- |
-| _Yarden Levy_    | [YardenLevy](https://github.com/YardenLevy) | YardenLevy@post.bgu.ac.il | 204341580 |
-| _Avihai Serfati_ | [serfati](https://github.com/serfati)       | serfata@post.bgu.ac.il    | 204520803 |
-
 ## License
 
 This program is free software: you can redistribute it and/or modify
